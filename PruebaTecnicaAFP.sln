@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTEC.Service", "PTEC.Servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTEC.WebApi", "PTEC.WebApi\PTEC.WebApi.csproj", "{1718FEF4-91DE-4EC5-8AE8-C1839A8522D3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PTEC.UnitTest", "PTEC.UnitTest\PTEC.UnitTest.csproj", "{0C238D01-5F38-485A-BF2A-19657E275FC8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{1718FEF4-91DE-4EC5-8AE8-C1839A8522D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1718FEF4-91DE-4EC5-8AE8-C1839A8522D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1718FEF4-91DE-4EC5-8AE8-C1839A8522D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C238D01-5F38-485A-BF2A-19657E275FC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C238D01-5F38-485A-BF2A-19657E275FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C238D01-5F38-485A-BF2A-19657E275FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C238D01-5F38-485A-BF2A-19657E275FC8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
