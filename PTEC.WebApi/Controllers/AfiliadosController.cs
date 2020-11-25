@@ -29,19 +29,31 @@ namespace PTEC.WebApi.Controllers
             try
             {
                 Afiliado afiliado = await _afiliadoService.GetAfiliadoByIdAsyc(Guid.Parse(id));
-                AfiliadoOutputDto afiliadoOutputDto = new AfiliadoOutputDto();
-                afiliadoOutputDto.Id = afiliado.Id;
-                afiliadoOutputDto.Nombre = afiliado.Nombre;
-                afiliadoOutputDto.Apellido = afiliado.Apellido;
-                afiliadoOutputDto.NumeroDocumento = afiliado.NumeroDocumento;
-                afiliadoOutputDto.FechaIngreso = afiliado.FechaIngreso;
-                afiliadoOutputDto.Telefonos = new List<TelefonoOutputDto>();
-                foreach(var tel in afiliado.Telefonos)
-                {
-                    afiliadoOutputDto.Telefonos.Add(new TelefonoOutputDto() { Numero = tel.Numero });
-                }
+                AfiliadoOutputDto afiliadoOutputDto = GetAfiliadoDto(afiliado);
 
                 return Ok(afiliadoOutputDto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet]
+        [ProducesResponseType(200, Type = typeof(List<AfiliadoOutputDto>))]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> List([FromQuery]BusquedaInputDto busqueda)
+        {
+            try
+            {
+                List<Afiliado> afiliados = await _afiliadoService.GetListaAfiliadosAsync(busqueda.NumeroDocumento);
+                List<AfiliadoOutputDto> afiliadosOutputDto = new List<AfiliadoOutputDto>();
+                foreach(var afiliado in afiliados)
+                {
+                    afiliadosOutputDto.Add(GetAfiliadoDto(afiliado));
+                }
+
+                return Ok(afiliadosOutputDto);
             }
             catch (Exception ex)
             {
@@ -67,17 +79,7 @@ namespace PTEC.WebApi.Controllers
                 }
 
                 Afiliado afiliado = await _afiliadoService.AgregarAfiliadoAsync(afiliadoNuevo);
-                AfiliadoOutputDto afiliadoOutputDto = new AfiliadoOutputDto();
-                afiliadoOutputDto.Id = afiliado.Id;
-                afiliadoOutputDto.Nombre = afiliado.Nombre;
-                afiliadoOutputDto.Apellido = afiliado.Apellido;
-                afiliadoOutputDto.NumeroDocumento = afiliado.NumeroDocumento;
-                afiliadoOutputDto.FechaIngreso = afiliado.FechaIngreso;
-                afiliadoOutputDto.Telefonos = new List<TelefonoOutputDto>();
-                foreach (var tel in afiliado.Telefonos)
-                {
-                    afiliadoOutputDto.Telefonos.Add(new TelefonoOutputDto() { Numero = tel.Numero });
-                }
+                AfiliadoOutputDto afiliadoOutputDto = GetAfiliadoDto(afiliado);
 
                 return Ok(afiliadoOutputDto);
             }
@@ -86,5 +88,26 @@ namespace PTEC.WebApi.Controllers
                 return BadRequest(ex);
             }
         }
+
+        #region Metodos Privados
+
+        private AfiliadoOutputDto GetAfiliadoDto(Afiliado afiliado)
+        {
+            AfiliadoOutputDto afiliadoOutputDto = new AfiliadoOutputDto();
+            afiliadoOutputDto.Id = afiliado.Id;
+            afiliadoOutputDto.Nombre = afiliado.Nombre;
+            afiliadoOutputDto.Apellido = afiliado.Apellido;
+            afiliadoOutputDto.NumeroDocumento = afiliado.NumeroDocumento;
+            afiliadoOutputDto.FechaIngreso = afiliado.FechaIngreso;
+            afiliadoOutputDto.Telefonos = new List<TelefonoOutputDto>();
+            foreach (var tel in afiliado.Telefonos)
+            {
+                afiliadoOutputDto.Telefonos.Add(new TelefonoOutputDto() { Numero = tel.Numero });
+            }
+
+            return afiliadoOutputDto;
+        }
+
+        #endregion
     }
 }
