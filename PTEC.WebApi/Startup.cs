@@ -4,7 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using PTEC.Core.Repositories;
+using PTEC.Core.Services;
 using PTEC.Data;
+using PTEC.Data.Repositories;
+using PTEC.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +33,20 @@ namespace PTEC.WebApi
             services.AddScoped<DbContext, PTecnicaContext>();
             services.AddDbContext<PTecnicaContext>(opt => opt.UseSqlServer(connectionString));
 
+            services.AddScoped<IAfiliadoRepository, AfiliadoRepository>();
+            services.AddScoped<IAfiliadoService, AfiliadoService>();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Prueba tecnica API",
+                    Description = "ASP.NET Core Web API",
+                    TermsOfService = new Uri("https://example.com/terms")
+                });
+            });
+
             services.AddControllersWithViews();
         }
 
@@ -45,6 +64,17 @@ namespace PTEC.WebApi
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseAuthorization();
 

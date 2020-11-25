@@ -47,6 +47,11 @@ namespace PTEC.Service
             await _afiliadoRepository.SaveChangesAsync();
         }
 
+        public async Task<Afiliado> GetAfiliadoByIdAsyc(Guid id)
+        {
+            return await _afiliadoRepository.GetAfiliadoByIdAsync(id);
+        }
+
         public async Task<List<Afiliado>> GetListaAfiliadosAsync(string numeroDocumento)
         {
             bool sinNumeroDoc = string.IsNullOrEmpty(numeroDocumento);

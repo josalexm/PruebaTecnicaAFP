@@ -9,6 +9,13 @@ namespace PTEC.Core.Services
     public interface IAfiliadoService
     {
         /// <summary>
+        /// Extrae un registro de afiliado segun su idenfiticador
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<Afiliado> GetAfiliadoByIdAsyc(Guid id);
+
+        /// <summary>
         /// Extrae una lista de afiliados segun los parametros estipulados
         /// </summary>
         /// <param name="numeroDocumento"></param>
